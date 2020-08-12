@@ -1,0 +1,159 @@
+1.	Using count, get the number of cities in the USA.
+
+SELECT
+COUNT(*)
+FROM city
+WHERE CountryCode = 'USA';
+
+ANSWER = 274
+
+2.	Find out what the population and average life expectancy for people in Argentina (ARG) is.
+
+SELECT AVG(LifeExpectancy)
+FROM country
+WHERE Code = 'ARG';
+
+ANSWER = 75.1
+
+3.	Using IS NOT NULL, ORDER BY, LIMIT, what country has the highest life expectancy?
+
+
+SELECT * FROM country  
+WHERE LifeExpectancy IS NOT NULL
+ORDER BY LifeExpectancy DESC
+LIMIT 1;
+
+
+ANSWER = Andorra, Life expectancy = 83.5
+
+4.	Using LEFT JOIN, ON, what is the capital of Spain (ESP)?
+
+
+SELECT * FROM
+country
+JOIN city 
+ON country.Code = city.CountryCode
+WHERE Code ='ESP';
+
+5.	Using LEFT JOIN, ON, list all the languages spoken in the 'Southeast Asia' region.
+
+
+SELECT DISTINCT(Language) FROM countrylanguage
+JOIN country
+ON countrylanguage.CountryCode = country.Code
+WHERE country.region = 'Southeast Asia';
+
+
+6.	Select 25 cities around the world that start with the letter 'F' in a single SQL query.
+
+SELECT * FROM city
+WHERE Name LIKE 'f%'
+LIMIT 25;
+
+7.	Using COUNT, get the number of cities in China. (When using COUNT the brackets (*) can't have a
+space between COUNT).
+
+SELECT COUNT(*)
+FROM city
+WHERE CountryCode ='CHN';
+
+ANSWER = 363
+
+8.	Using IS NOT NULL, ORDER BY, & LIMIT, what country has the lowest population?
+
+SELECT * FROM country
+WHERE Population IS NOT NULL
+ORDER BY Population
+LIMIT 1;
+
+ANSWER = Antarctica with 0 population.
+
+9.	Using aggregation, return the number of countries in the database.
+
+SELECT COUNT(DISTINCT(Code))
+FROM country;
+
+ANSWER = 239
+
+10.	What are the top ten largest countries?
+
+SELECT Name FROM country
+ORDER BY SurfaceArea DESC
+LIMIT 10;
+
+ANSWER = RUS, ATA, CAN, CHN, USA, BRA, AUS, IND, ARG, KAZ
+
+11.	List the top five largest cities in Japan.
+
+SELECT Name FROM city
+WHERE CountryCode = 'JPN'
+ORDER BY Population DESC
+LIMIT 5;
+
+ANSWER = Toky, Jokohama, Osaka, Nagoya, Sapporo
+
+12.	List the names and country codes of every country which has Elizabeth II as its Head of State.
+
+SELECT Name, Code
+FROM country
+WHERE HeadOfState = 'Elisabeth II';
+
+ANSWER = 35 countries or zero for 'Elizabeth II'
+
+13.	List the top ten countries which have the smallest population-to-area ratio.
+
+SELECT Name, Population, SurfaceArea, (Population/SurfaceArea) AS Ratio
+FROM country
+ORDER BY Ratio
+LIMIT 10;
+
+ANSWER = Antarctica, Bouvet Island, ...
+
+14.	List every unique world language, according to the World database.
+
+
+SELECT DISTINCT(Language)
+FROM countrylanguage;
+
+15.	What are the top 10 richest countries by GDP?
+
+SELECT Name 
+FROM country
+ORDER BY GNP DESC
+LIMIT 10;
+
+16.	What are the top 10 largest countries by surface area?
+
+SELECT Name
+FROM country
+ORDER BY SurfaceArea DESC
+LIMIT 10;
+
+17.	List every country where over 50% of its population can speak French.
+
+SELECT CountryCode FROM countrylanguage
+WHERE Percentage >= 50;
+
+18.	Which country has the worst life expectancy?
+
+SELECT Name FROM country
+WHERE LifeExpectancy IS NOT NULL
+ORDER BY LifeExpectancy
+LIMIT 1;
+
+ANSWER = Zambia
+
+19.	What is the most common government form?
+
+Republic
+
+20.	How many countries have gained independence since records began?
+
+SELECT COUNT(Name)
+FROM country
+WHERE IndepYear IS NOT NULL;
+
+ANSWER = 192
+
+
+

@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+  database:
+    image: 127.0.0.1:5000/database
+    build: ./db
+    environment:
+                  MYSQL_ROOT_PASSWORD: ${PASSWORD}
+                  MYSQL_USER: admin
+                  MYSQL_PASSWORD: ${PASSWORD}
+                  MYSQL_DATABASE: flask-db
+    ports:
+                  - target: 3306
+                    published: 3306
+                    protocol: tcp
+
+  flask-app:
+    image: 127.0.0.1:5000/app
+    build: ./flask-app
+    ports:
+    - target: 5000
+      published: 5001
+      protocol: tcp
+    environment:
+            DATABASE_URI: ${DATABASE_URI}
+    depends_on:
+            - database
+  nginx:
+    image: nginx:latest
+    ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+    depends_on:
+            - flask-app      
+
+
+

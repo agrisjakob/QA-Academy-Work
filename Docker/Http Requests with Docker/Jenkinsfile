@@ -1,0 +1,15 @@
+pipeline{
+	agent any
+	stages{
+		stage('Tests'){
+			steps{
+				sh "cd jenk_scripts && sh tests.sh"
+			}
+		}
+	stage('Deploy with update'){
+			steps{
+				 sh "cd jenk_scripts && sh deploy.sh"
+			}
+		}
+	}
+}

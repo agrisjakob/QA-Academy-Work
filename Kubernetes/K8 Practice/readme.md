@@ -1,0 +1,1 @@
+This folder contains various files that I used to practice using various aspects of kubernetes, like config-maps and namespaces.

@@ -1,0 +1,36 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - python3-pip
+  - jq
+write_files:
+  - owner: root:root
+    path: /etc/systemd/system/app.service
+    content: |
+        [Unit]
+        Description=start app
+        [Service]
+        User=agris
+        ExecStart=/bin/sh -c 'python3 /app.py'
+        [Install]
+        WantedBy=multi-user.target
+
+  - owner: agris:agris
+    path: /app.py
+    content: |
+        from flask import Flask
+        import socket
+
+        app = Flask(__name__)
+
+        host = socket.gethostname()
+
+        @app.route('/')
+        def index():
+            return "<h1>Hello World, I'm deployed automatically on " + str(host) + " :)</h1>"
+        if __name__ == '__main__':
+            app.run(debug=True,port=5000, host='0.0.0.0')
+runcmd:
+  - pip3 install flask
+  - sudo systemctl daemon-reload
+  - sudo waagent -deprovision+user -force

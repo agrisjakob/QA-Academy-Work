@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaperoo-db
+  labels:
+    app: chaperoo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chaperoo-db
+  template:
+    metadata:
+      labels:
+        app: chaperoo-db
+    spec:
+      containers:
+      - image: jordangrindrod/chaperoo-db
+        name: chaperoo-db
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+          name: chaperoo-db
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chaperoo-db
+spec:
+  selector:
+    app: chaperoo-db
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

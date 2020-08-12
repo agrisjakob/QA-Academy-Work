@@ -1,0 +1,22 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+    name: nginx-team
+    labels:
+        name: nginx-team
+
+---
+
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+  namespace: nginx-team
+spec:
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    ports:
+    - containerPort: 80

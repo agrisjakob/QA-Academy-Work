@@ -1,0 +1,11 @@
+
+{% extends "layout.html" %}
+{% block body_content %}
+<h1>Home Page</h1>
+{% for post in posts %}
+		<h2>{{ post.title }}<h2>
+	{{ post.author.first_name }} {{post.author.last_name }}<br>
+	{{ post.date_posted }} <br>
+	{{ post.content }}<br><br>
+	{% endfor %}
+	{% endblock %}

@@ -1,0 +1,40 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaperoo-client
+  labels:
+    app: chaperoo-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chaperoo-client
+  template:
+    metadata:
+      labels:
+        app: chaperoo-client
+    spec:
+      containers:
+      - name: chaperoo-client
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        image: jordangrindrod/chaperoo-client
+        ports:
+        - name: http-port3
+          containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: chaperoo-client
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: chaperoo-client

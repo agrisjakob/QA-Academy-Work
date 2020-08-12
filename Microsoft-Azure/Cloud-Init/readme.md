@@ -1,0 +1,1 @@
+Set-up a configured VM on Azure, make an image of it and redeploy a copy using cloud-init. 

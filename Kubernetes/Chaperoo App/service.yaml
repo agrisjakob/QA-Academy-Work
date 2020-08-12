@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaperoo-service
+  labels:
+    app: chaperoo-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chaperoo-service
+  template:
+    metadata:
+      labels:
+        app: chaperoo-service
+    spec:
+      containers:
+      - name: chaperoo-service
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        image: jordangrindrod/chaperoo-service
+        ports:
+        - name: http-port
+          containerPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: chaperoo-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: chaperoo-service
